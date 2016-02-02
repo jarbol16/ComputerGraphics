@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 /**
  *
- * @author Daniel Arboleda, Cristobal Ocampo
+ * @author Daniel Arboleda
  */
 public class Reto1Lines extends JPanel {
     
@@ -53,58 +53,44 @@ public class Reto1Lines extends JPanel {
             radio +=60;
         }
     }
-    
+        /**
+     * Implementación del Algoritmo de Bresenham
+     * @see <a href="http://members.chello.at/easyfilter/bresenham.html">Bresenham Algorithm</a>
+     * @param g  Una ventana Java de tipo Graphics
+     * @param x0 Coordenada x del primer punto
+     * @param y0 Coordenada y del primer punto
+     * @param x1 Coordenada x del segundo punto
+     * @param y1 Coordenada y del segundo punto
+     */
     public void Bresenham(Graphics g,int x0,int y0,int x1,int y1){
-       int x, y, dx, dy, p, incE, incNE, stepx, stepy;
-        dx = (x1 - x0);
-        dy = (y1 - y0);
-       /* determinar que punto usar para empezar, cual para terminar */
-        if (dy < 0) { 
-          dy = -dy; 
-          stepy = -1; 
-        } 
-        else stepy = 1;
-        if (dx < 0) {  
-          dx = -dx;  
-          stepx = -1; 
-        } 
-        else stepx = 1;
-
-        x = x0;
-        y = y0;
-        g.drawLine( x0, y0, x0, y0);
-       /* se cicla hasta llegar al extremo de la línea */
-        if(dx>dy){
-            p = 2*dy - dx;
-            incE = 2*dy;
-            incNE = 2*(dy-dx);
-            while (x != x1){
-              x = x + stepx;
-              if (p < 0){
-                p = p + incE;
-              }
-              else {
-                y = y + stepy;
-                p = p + incNE;
-              }
-              g.drawLine( x, y, x, y);
+        Graphics2D g2d = (Graphics2D) g;
+        int dx = Math.abs(x1 - x0);
+        int dy = -Math.abs(y1 - y0);
+        int err = dx + dy, e2;
+        int sx, sy;
+        if (x0 < x1) {
+            sx = 1;
+        } else {
+            sx = -1;
+        }
+        if (y0 < y1) {
+            sy = 1;
+        } else {
+            sy = -1;
+        }
+        for (;;) {
+            g2d.drawLine(x0, y0, x0, y0);
+            if (x0 == x1 && y0 == y1) {
+                break;
             }
-          }
-          else{
-            p = 2*dx - dy;
-            incE = 2*dx;
-            incNE = 2*(dx-dy);
-            while (y != y1){
-              y = y + stepy;
-              if (p < 0){
-                p = p + incE;
-              }
-              else {
-                x = x + stepx;
-                p = p + incNE;
-              }
-              g.drawLine( x, y, x, y);
-              
+            e2 = 2 * err;
+            if (e2 >= dy) {
+                err += dy;
+                x0 += sx;
+            }
+            if (e2 <= dx) {
+                err += dx;
+                y0 += sy;
             }
         }
     }
