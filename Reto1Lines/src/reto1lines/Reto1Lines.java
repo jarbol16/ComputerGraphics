@@ -32,7 +32,7 @@ public class Reto1Lines extends JPanel {
         int x,y,xT,yT;
         int radio = 100;
         int alpha=0;
-        int increment = 4;//Para medir la separacion entre cada linea
+        int increment = 3;//Para medir la separacion entre cada linea
         int n = 3; //Numero de circulos que deceo pintar
         //Este for es para pintar en numero de circulos que queramos. 
         for (int i=0;i<n;i++){
